@@ -1,14 +1,17 @@
 import { sleep, check } from "k6";
 import http from "k6/http";
+import { Counter } from "k6/metrics";
 
-import { sample } from "./sample.js";
+import { sample } from "./sample-zone.js";
+
+var myCounter = new Counter("not-found");
 
 const getSamples = sample.filter((it) => it.includes("GET"));
 
-const catalystUrl = "https://peer-testing-2.decentraland.org";
+const catalystUrl = "https://peer-ap1.decentraland.zone";
 
 export let options = {
-  vus: 200,
+  vus: 400,
   duration: "600s",
 };
 
@@ -29,9 +32,14 @@ export default function () {
   // const url = catalystUrl + "/comms/status"
 
   const res = http.get(url, { timeout: "120s" });
+  
+  if(res.status === 404) {
+    myCounter.add(1)
+  }
+  
   check(res, {
     "is status 200": (r) => r.status === 200 || r.status === 404,
   });
 
-  sleep(0.1);
+  sleep(0.5);
 }
