@@ -6,7 +6,9 @@ import { sample } from "./sample-zone.js";
 
 var myCounter = new Counter("not-found");
 
-const getSamples = sample.filter((it) => it.includes("GET"));
+const notContent = sample.filter((it) => !it.includes("contents"));
+const content = sample.filter((it) => it.includes("contents"));
+const getSamples = [...notContent, ...content.slice(0, 30)];
 
 const catalystUrl = "https://peer-ap1.decentraland.zone";
 
@@ -32,11 +34,11 @@ export default function () {
   // const url = catalystUrl + "/comms/status"
 
   const res = http.get(url, { timeout: "120s" });
-  
-  if(res.status === 404) {
-    myCounter.add(1)
+
+  if (res.status === 404) {
+    myCounter.add(1);
   }
-  
+
   check(res, {
     "is status 200": (r) => r.status === 200 || r.status === 404,
   });
