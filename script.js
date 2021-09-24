@@ -10,11 +10,11 @@ const notContent = sample.filter((it) => !it.includes("contents"));
 const content = sample.filter((it) => it.includes("contents"));
 const getSamples = [...notContent, ...content.slice(0, 30)];
 
-const catalystUrl = "https://peer-ap1.decentraland.zone";
+const catalystUrl = "https://peer-ue-2.decentraland.zone";
 
 export let options = {
   vus: 400,
-  duration: "600s",
+  duration: "3600s",
 };
 
 function randomSample() {
@@ -23,7 +23,7 @@ function randomSample() {
 
 export default function () {
   const request = randomSample();
-  let url = catalystUrl + request.replace(/\w+ (.*) HTTP.*/, "$1");
+  let url = catalystUrl + request.replace(/\w+ (.*)[ HTTP.*]?/, "$1");
 
   url =
     url +
