@@ -44,7 +44,7 @@ function isDateInRequestedPeriod(line) {
 
 const data = fs.readFileSync(fileName, "utf-8");
 
-const requestRegex = /GET\s[^\s]+/;
+const requestRegex = /GET\s([^\s]+)/;
 
 const validLines = data
   .split("\n")
