@@ -29,7 +29,7 @@ fetch(
 
   const requests = deployments
     .slice(0, quantity)
-    .map((it) => `GET lambdas/profiles?id=${it.pointers[0]}`);
+    .map((it) => `GET /lambdas/profiles?id=${it.pointers[0]}`);
 
   console.log(JSON.stringify(requests, undefined, 2));
 });
